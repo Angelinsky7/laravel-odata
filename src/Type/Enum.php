@@ -179,6 +179,13 @@ class Enum extends Primitive
         return $flags;
     }
 
+    public function toValues(): array
+    {
+        return array_map(function (EnumMember $member) {
+            return $member->getValue();
+        }, $this->toFlags());
+    }
+
     /**
      * Clear all the flags set on this enumeration
      * @return $this

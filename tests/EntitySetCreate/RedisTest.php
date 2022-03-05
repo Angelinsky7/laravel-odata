@@ -115,6 +115,21 @@ class RedisTest extends EntitySetCreateTest
         );
     }
 
+    public function test_enum_collection_property()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->post()
+                ->path($this->entitySetPath)
+                ->body([
+                    'key' => 'zeta',
+                    'name' => 'Zeta',
+                    'shoe_colours' => ['Green', 'Red'],
+                ]),
+            Response::HTTP_CREATED
+        );
+    }
+
     public function test_collection_property()
     {
         $this->assertJsonResponseSnapshot(

@@ -59,6 +59,7 @@ trait WithEloquentDriver
             $this->addEnumerationTypes();
             $passengerType->addDeclaredProperty('colour', Lodata::getTypeDefinition('Colours'));
             $passengerType->addDeclaredProperty('sock_colours', Lodata::getTypeDefinition('MultiColours'));
+            $passengerType->addDeclaredProperty('shoe_colours', Type::collection(Lodata::getTypeDefinition('Colours')));
         }
 
         Lodata::getEntityType('Flight')->getProperty('duration')->setType(Type::duration());

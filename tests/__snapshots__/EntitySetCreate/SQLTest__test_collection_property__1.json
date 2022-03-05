@@ -11,6 +11,7 @@
     "flight_id": null,
     "colour": null,
     "sock_colours": null,
+    "shoe_colours": [],
     "emails": [
         "oob@example.com",
         "oo@test.com"

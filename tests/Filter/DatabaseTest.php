@@ -56,4 +56,25 @@ abstract class DatabaseTest extends FilterTest
 
         parent::test_filter_substring_2();
     }
+
+    public function test_filter_has_enum_collection()
+    {
+        $this->markTestSkippedForDriver([SQLEntitySet::SQLite, SQLEntitySet::SQLServer]);
+
+        parent::test_filter_has_enum_collection();
+    }
+
+    public function test_filter_has_enum_collection_multiple()
+    {
+        $this->markTestSkippedForDriver([SQLEntitySet::SQLite, SQLEntitySet::SQLServer]);
+
+        parent::test_filter_has_enum_collection_multiple();
+    }
+
+    public function test_filter_has_enum_collection_multiple_reversed()
+    {
+        $this->markTestSkippedForDriver([SQLEntitySet::SQLite, SQLEntitySet::SQLServer]);
+
+        parent::test_filter_has_enum_collection_multiple_reversed();
+    }
 }

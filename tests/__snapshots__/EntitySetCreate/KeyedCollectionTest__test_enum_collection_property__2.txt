@@ -1,0 +1,14 @@
+@@ @@
+         "colour": null,
+         "sock_colours": null,
+         "shoe_colours": null
++    },
++    "zeta": {
++        "id": "zeta",
++        "name": "Zeta",
++        "shoe_colours": [
++            2,
++            1
++        ]
+     }
+ }

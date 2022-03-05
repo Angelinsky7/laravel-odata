@@ -150,6 +150,20 @@ abstract class EntitySetCreateTest extends TestCase
         );
     }
 
+    public function test_enum_collection_property()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->post()
+                ->path($this->entitySetPath)
+                ->body([
+                    'name' => 'Oobleck',
+                    'shoe_colours' => ['Green', 'Red'],
+                ]),
+            Response::HTTP_CREATED
+        );
+    }
+
     public function test_collection_property()
     {
         $this->assertJsonResponseSnapshot(

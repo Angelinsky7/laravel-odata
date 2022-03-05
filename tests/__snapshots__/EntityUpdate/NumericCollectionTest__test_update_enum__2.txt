@@ -5,5 +5,5 @@
 -        "colour": 2,
 +        "colour": 8,
          "sock_colours": 6,
-         "emails": [
-             "alpha@example.com",
+         "shoe_colours": [
+             2,

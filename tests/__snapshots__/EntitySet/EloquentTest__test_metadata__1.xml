@@ -415,6 +415,7 @@
         <Property Name="open_time" Type="Edm.TimeOfDay" Nullable="true"/>
         <Property Name="colour" Type="com.example.odata.Colours" Nullable="true"/>
         <Property Name="sock_colours" Type="com.example.odata.MultiColours" Nullable="true"/>
+        <Property Name="shoe_colours" Type="Collection(com.example.odata.Colours)" Nullable="false"/>
         <Property Name="emails" Type="Collection(Edm.String)" Nullable="false"/>
         <NavigationProperty Name="pets" Type="Collection(com.example.odata.Pet)" Nullable="true">
           <ReferentialConstraint Property="id" ReferencedProperty="passenger_id"/>

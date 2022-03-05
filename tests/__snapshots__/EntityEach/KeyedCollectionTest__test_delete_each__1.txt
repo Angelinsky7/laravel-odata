@@ -11,6 +11,10 @@
 -        "flight_id": 1,
 -        "colour": 2,
 -        "sock_colours": 6,
+-        "shoe_colours": [
+-            2,
+-            4
+-        ],
 -        "emails": [
 -            "alpha@example.com",
 -            "alpha@beta.com"
@@ -24,7 +28,8 @@
 -        "dq": "2001-02-02",
 -        "in_role": 191105.3,
 -        "colour": null,
--        "sock_colours": null
+-        "sock_colours": null,
+-        "shoe_colours": []
 -    },
      "gamma": {
          "name": "Gamma",

@@ -288,6 +288,7 @@
                                     "open_time",
                                     "colour",
                                     "sock_colours",
+                                    "shoe_colours",
                                     "emails"
                                 ]
                             }
@@ -295,22 +296,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/count"
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "pets"
-                                ]
-                            }
-                        }
                     },
                     {
                         "$ref": "#/components/parameters/filter"
@@ -471,23 +456,8 @@
                                     "open_time",
                                     "colour",
                                     "sock_colours",
+                                    "shoe_colours",
                                     "emails"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "pets"
                                 ]
                             }
                         }
@@ -552,169 +522,6 @@
                 }
             }
         },
-        "/Passengers/{id}/pets": {
-            "parameters": [
-                {
-                    "description": "Key: id",
-                    "in": "path",
-                    "name": "id",
-                    "required": true,
-                    "schema": {
-                        "type": "integer",
-                        "format": "int64",
-                        "minimum": -9223372036854775808,
-                        "maximum": 9223372036854775807,
-                        "nullable": false
-                    }
-                }
-            ],
-            "get": {
-                "summary": "Get entities from related Pets",
-                "tags": [
-                    "Pets",
-                    "Passengers"
-                ],
-                "parameters": [
-                    {
-                        "name": "select",
-                        "in": "query",
-                        "description": "Select properties to be returned, see [OData Select](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionselect)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "*",
-                                    "id",
-                                    "passenger_id",
-                                    "name",
-                                    "type"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/count"
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "passenger"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/filter"
-                    },
-                    {
-                        "$ref": "#/components/parameters/search"
-                    },
-                    {
-                        "$ref": "#/components/parameters/top"
-                    },
-                    {
-                        "$ref": "#/components/parameters/skip"
-                    },
-                    {
-                        "name": "orderby",
-                        "in": "query",
-                        "description": "Order items by property values, see [OData Sorting](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionorderby)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "id",
-                                    "id desc",
-                                    "passenger_id",
-                                    "passenger_id desc",
-                                    "name",
-                                    "name desc",
-                                    "type",
-                                    "type desc"
-                                ]
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Retrieved entities",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "Collection of Pets",
-                                    "properties": {
-                                        "value": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/com.example.odata.Pet"
-                                            }
-                                        },
-                                        "@count": {
-                                            "$ref": "#/components/schemas/count"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "4XX": {
-                        "$ref": "#/components/responses/error"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Add new entity to related Pets",
-                "tags": [
-                    "Pets",
-                    "Passengers"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "description": "New entity",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/com.example.odata.Pet~create"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/com.example.odata.Pet"
-                                }
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "Success"
-                    },
-                    "4XX": {
-                        "$ref": "#/components/responses/error"
-                    }
-                }
-            }
-        },
         "/Pets": {
             "get": {
                 "summary": "Get entities from Pets",
@@ -744,22 +551,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/count"
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "passenger"
-                                ]
-                            }
-                        }
                     },
                     {
                         "$ref": "#/components/parameters/filter"
@@ -902,22 +693,6 @@
                                 ]
                             }
                         }
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "passenger"
-                                ]
-                            }
-                        }
                     }
                 ],
                 "responses": {
@@ -970,191 +745,6 @@
                     "Pets"
                 ],
                 "responses": {
-                    "204": {
-                        "description": "Success"
-                    },
-                    "4XX": {
-                        "$ref": "#/components/responses/error"
-                    }
-                }
-            }
-        },
-        "/Pets/{id}/passenger": {
-            "parameters": [
-                {
-                    "description": "Key: id",
-                    "in": "path",
-                    "name": "id",
-                    "required": true,
-                    "schema": {
-                        "type": "integer",
-                        "format": "int64",
-                        "minimum": -9223372036854775808,
-                        "maximum": 9223372036854775807,
-                        "nullable": false
-                    }
-                }
-            ],
-            "get": {
-                "summary": "Get entities from related Passengers",
-                "tags": [
-                    "Passengers",
-                    "Pets"
-                ],
-                "parameters": [
-                    {
-                        "name": "select",
-                        "in": "query",
-                        "description": "Select properties to be returned, see [OData Select](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionselect)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "*",
-                                    "id",
-                                    "flight_id",
-                                    "name",
-                                    "dob",
-                                    "age",
-                                    "chips",
-                                    "dq",
-                                    "in_role",
-                                    "open_time",
-                                    "colour",
-                                    "sock_colours",
-                                    "emails"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/count"
-                    },
-                    {
-                        "name": "expand",
-                        "in": "query",
-                        "description": "Expand related entities, see [OData Expand](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionexpand)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "pets"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/filter"
-                    },
-                    {
-                        "$ref": "#/components/parameters/search"
-                    },
-                    {
-                        "$ref": "#/components/parameters/top"
-                    },
-                    {
-                        "$ref": "#/components/parameters/skip"
-                    },
-                    {
-                        "name": "orderby",
-                        "in": "query",
-                        "description": "Order items by property values, see [OData Sorting](https://docs.oasis-open.org/odata/odata/v4.01/cs01/part1-protocol/odata-v4.01-cs01-part1-protocol.html#sec_SystemQueryOptionorderby)",
-                        "explode": false,
-                        "schema": {
-                            "type": "array",
-                            "uniqueItems": true,
-                            "items": {
-                                "type": "string",
-                                "enum": [
-                                    "id",
-                                    "id desc",
-                                    "flight_id",
-                                    "flight_id desc",
-                                    "name",
-                                    "name desc",
-                                    "dob",
-                                    "dob desc",
-                                    "age",
-                                    "age desc",
-                                    "chips",
-                                    "chips desc",
-                                    "dq",
-                                    "dq desc",
-                                    "in_role",
-                                    "in_role desc",
-                                    "open_time",
-                                    "open_time desc",
-                                    "colour",
-                                    "colour desc",
-                                    "sock_colours",
-                                    "sock_colours desc"
-                                ]
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Retrieved entities",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "Collection of Passengers",
-                                    "properties": {
-                                        "value": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/com.example.odata.Passenger"
-                                            }
-                                        },
-                                        "@count": {
-                                            "$ref": "#/components/schemas/count"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "4XX": {
-                        "$ref": "#/components/responses/error"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Add new entity to related Passengers",
-                "tags": [
-                    "Passengers",
-                    "Pets"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "description": "New entity",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/com.example.odata.Passenger~create"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/com.example.odata.Passenger"
-                                }
-                            }
-                        }
-                    },
                     "204": {
                         "description": "Success"
                     },
@@ -1636,24 +1226,25 @@
                         "nullable": true
                     },
                     "colour": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
                     },
                     "sock_colours": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
+                    },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": false
                     },
                     "emails": {
                         "type": "array",
@@ -1733,24 +1324,25 @@
                         "nullable": true
                     },
                     "colour": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
                     },
                     "sock_colours": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
+                    },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": false
                     },
                     "emails": {
                         "type": "array",
@@ -1830,24 +1422,25 @@
                         "nullable": true
                     },
                     "colour": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
                     },
                     "sock_colours": {
-                        "type": "string",
-                        "enum": [
-                            "Red",
-                            "Green",
-                            "Blue",
-                            "Brown"
-                        ],
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807,
                         "nullable": true
+                    },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": false
                     },
                     "emails": {
                         "type": "array",

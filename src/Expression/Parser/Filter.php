@@ -109,10 +109,10 @@ class Filter extends Common
             $this->tokenizeParameterAlias() ||
             $this->tokenizeLambdaVariable() ||
             $this->tokenizeLambdaProperty() ||
+            $this->tokenizeNavigationPropertyPath() ||
             $this->tokenizeDeclaredProperty() ||
             $this->tokenizeComputedProperty() ||
-            $this->tokenizeOperator() ||
-            $this->tokenizeNavigationPropertyPath();
+            $this->tokenizeOperator();
     }
 
     /**

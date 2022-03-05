@@ -268,6 +268,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         $entityType->addDeclaredProperty('flight_id', Type::int64());
         $entityType->addDeclaredProperty('colour', Lodata::getTypeDefinition('Colours'));
         $entityType->addDeclaredProperty('sock_colours', Lodata::getTypeDefinition('MultiColours'));
+        $entityType->addDeclaredProperty('shoe_colours', Type::collection(Lodata::getTypeDefinition('Colours')));
         $entityType->addDeclaredProperty('emails', Type::collection(Type::string()));
     }
 
@@ -285,6 +286,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                 'flight_id' => 1,
                 'colour' => 2,
                 'sock_colours' => 2 | 4,
+                'shoe_colours' => [2, 4],
                 'emails' => [
                     'alpha@example.com',
                     'alpha@beta.com',
@@ -299,6 +301,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                 'in_role' => 191105.3,
                 'colour' => null,
                 'sock_colours' => null,
+                'shoe_colours' => [],
             ],
             'gamma' => [
                 'name' => 'Gamma',
@@ -311,6 +314,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                 'flight_id' => 1,
                 'colour' => 4,
                 'sock_colours' => 1 | 2 | 4,
+                'shoe_colours' => [1, 2, 4],
                 'emails' => [
                     'gamma@example.com',
                 ],
@@ -328,6 +332,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                 'in_role' => 888.9,
                 'colour' => null,
                 'sock_colours' => null,
+                'shoe_colours' => null,
             ]
         ];
     }

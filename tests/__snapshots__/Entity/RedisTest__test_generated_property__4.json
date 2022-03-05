@@ -46,6 +46,7 @@
                                     "flight_id",
                                     "colour",
                                     "sock_colours",
+                                    "shoe_colours",
                                     "emails",
                                     "cp"
                                 ]
@@ -168,6 +169,7 @@
                                     "flight_id",
                                     "colour",
                                     "sock_colours",
+                                    "shoe_colours",
                                     "emails",
                                     "cp"
                                 ]
@@ -397,6 +399,19 @@
                         ],
                         "nullable": true
                     },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "Red",
+                                "Green",
+                                "Blue",
+                                "Brown"
+                            ]
+                        },
+                        "nullable": false
+                    },
                     "emails": {
                         "type": "array",
                         "items": {
@@ -488,6 +503,19 @@
                         ],
                         "nullable": true
                     },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "Red",
+                                "Green",
+                                "Blue",
+                                "Brown"
+                            ]
+                        },
+                        "nullable": false
+                    },
                     "emails": {
                         "type": "array",
                         "items": {
@@ -574,6 +602,19 @@
                             "Brown"
                         ],
                         "nullable": true
+                    },
+                    "shoe_colours": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "Red",
+                                "Green",
+                                "Blue",
+                                "Brown"
+                            ]
+                        },
+                        "nullable": false
                     },
                     "emails": {
                         "type": "array",

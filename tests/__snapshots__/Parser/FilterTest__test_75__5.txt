@@ -1,0 +1,2 @@
+expression: priorityC has com.example.odata.Priorities'high,medium'
+result: This entity set does not support the operator "has"

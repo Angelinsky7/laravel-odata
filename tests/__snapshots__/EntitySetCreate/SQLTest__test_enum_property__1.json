@@ -11,5 +11,6 @@
     "flight_id": null,
     "colour": "Blue",
     "sock_colours": "Red,Green",
+    "shoe_colours": [],
     "emails": []
 }

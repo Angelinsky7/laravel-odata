@@ -1,5 +1,5 @@
 @@ @@
-         "sock_colours": 6,
+         ],
          "emails": [
              "alpha@example.com",
 -            "alpha@beta.com"

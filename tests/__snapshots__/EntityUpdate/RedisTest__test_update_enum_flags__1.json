@@ -10,6 +10,10 @@
     "flight_id": 1,
     "colour": "Green",
     "sock_colours": "Blue,Brown",
+    "shoe_colours": [
+        "Green",
+        "Blue"
+    ],
     "emails": [
         "alpha@example.com",
         "alpha@beta.com"

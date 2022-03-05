@@ -18,9 +18,11 @@
          "dq": "2001-02-02",
          "in_role": 191105.3,
 -        "colour": null,
--        "sock_colours": null
+-        "sock_colours": null,
+-        "shoe_colours": []
 +        "colour": 0,
 +        "sock_colours": 0,
++        "shoe_colours": [],
 +        "open_time": null,
 +        "flight_id": null,
 +        "emails": []

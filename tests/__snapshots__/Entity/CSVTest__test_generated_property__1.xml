@@ -95,6 +95,7 @@
         <Property Name="flight_id" Type="Edm.Int64" Nullable="true"/>
         <Property Name="colour" Type="com.example.odata.Colours" Nullable="true"/>
         <Property Name="sock_colours" Type="com.example.odata.MultiColours" Nullable="true"/>
+        <Property Name="shoe_colours" Type="Collection(com.example.odata.Colours)" Nullable="false"/>
         <Property Name="emails" Type="Collection(Edm.String)" Nullable="false"/>
         <Property Name="cp" Type="Edm.Int32" Nullable="true"/>
       </EntityType>

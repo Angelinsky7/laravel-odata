@@ -3,5 +3,5 @@ headers:
     content-type: [application/json;metadata=minimal]
     odata-version: ['4.01']
     location: ['http://localhost/odata/Passengers(6)']
-    etag: ['W/"aa38a67546c2990b5714525148d439e576e28b2a72e653c736ddd363571ab031"']
+    etag: ['W/"1541baa3ebc2bd734a0291be4f3eea88d8da500f63125d268526294a9dba6b0a"']
 status: 201

@@ -18,4 +18,19 @@ class LambdaTest extends ExpressionTest
     {
         $this->assertLambda("da/all(d:d/name eq 'hello')");
     }
+
+    public function test_6a()
+    {
+        $this->assertFilter("priorityC/any(a:a eq Priorities'high')");
+    }
+
+    public function test_6b()
+    {
+        $this->assertFilter("priorityC/all(a:a eq Priorities'high'");
+    }
+
+    public function test_6c()
+    {
+        $this->assertFilter("priorityC/any(a:a in (Priorities'high', Priorities'medium')");
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flat3\Lodata\Expression;
 
+use Flat3\Lodata\ComputedProperty;
 use Flat3\Lodata\EntitySet;
 use Flat3\Lodata\EnumerationType;
 use Flat3\Lodata\Exception\Internal\ParserException;
@@ -680,34 +681,40 @@ abstract class Parser
     }
 
     /**
-     * Tokenize a lambda property
+     * Tokenize a lambda navigation property
      * @return bool
      */
     public function tokenizeLambdaProperty(): bool
     {
-        $variable = null;
+        $variable = Arr::last($this->operandStack) ?? null;
+        $navigationPath = array_reverse($this->operandStack)[1] ?? null;
 
-        foreach (array_reverse($this->tokens) as $token) {
-            if ($token instanceof Literal\LambdaVariable) {
-                $variable = $token;
-                break;
-            }
-        }
-
-        if (!$variable) {
+        if (!$variable instanceof Literal\LambdaVariable) {
             return false;
         }
 
-        $preamble = $this->lexer->maybeLiteral($variable->getValue().'/');
-
-        if (!$preamble) {
+        if (!$navigationPath instanceof Property\Navigation) {
             return false;
         }
 
-        $token = $this->lexer->identifier();
+        $identifier = $this->lexer->with(function () {
+            return $this->lexer->identifier();
+        });
+
+        if ($identifier !== $variable->getValue()) {
+            return false;
+        }
+
+        $property = new ComputedProperty($identifier);
+
+        if ($this->lexer->maybeChar(Lexer::pathSeparator)) {
+            /** @var EntitySet $property */
+            $property = $navigationPath->getValue();
+            $property = $property->getType()->getProperty($this->lexer->identifier());
+        }
 
         $operand = new Node\Property\Lambda($this);
-        $operand->setValue($token);
+        $operand->setValue($property);
         $operand->setVariable($variable);
         $this->operandStack[] = $operand;
         $this->tokens[] = $operand;

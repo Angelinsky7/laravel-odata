@@ -13,6 +13,10 @@
             "open_time": "05:05:05.000000",
             "colour": "Green",
             "sock_colours": "Green,Blue",
+            "shoe_colours": [
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "alpha@example.com",
                 "alpha@beta.com"
@@ -52,6 +56,7 @@
             "open_time": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": [],
             "originAirport": null,
             "destinationAirport": null
@@ -68,6 +73,11 @@
             "open_time": "07:07:07.000000",
             "colour": "Blue",
             "sock_colours": "Red,Green,Blue",
+            "shoe_colours": [
+                "Red",
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "gamma@example.com"
             ],
@@ -106,6 +116,7 @@
             "open_time": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": [],
             "originAirport": null,
             "destinationAirport": null
@@ -122,6 +133,7 @@
             "open_time": "23:11:33.000000",
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": [],
             "originAirport": null,
             "destinationAirport": null

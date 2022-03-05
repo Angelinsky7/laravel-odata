@@ -1,7 +1,7 @@
 @@ @@
-         "flight_id": 1,
-         "colour": 2,
-         "sock_colours": 6,
+             2,
+             4
+         ],
 -        "emails": [
 -            "alpha@example.com",
 -            "alpha@beta.com"

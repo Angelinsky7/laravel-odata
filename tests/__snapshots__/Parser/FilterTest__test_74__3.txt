@@ -1,0 +1,2 @@
+expression: priorityC has Priorities'high,medium'
+result: ( "flights"."priorityC" @> '[ 1, 2 ]'::jsonb )

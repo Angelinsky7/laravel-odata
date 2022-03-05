@@ -14,6 +14,7 @@
             "in_role": "P2DT5H5M5.2999999999884S",
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "key": "beta"
         },
         {
@@ -30,6 +31,11 @@
             "flight_id": 1,
             "colour": "Blue",
             "sock_colours": "Red,Green,Blue",
+            "shoe_colours": [
+                "Red",
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "gamma@example.com"
             ],
@@ -55,6 +61,7 @@
             "in_role": "PT14M48.9S",
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "key": "epsilon"
         }
     ]

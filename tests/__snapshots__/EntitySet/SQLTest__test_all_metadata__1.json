@@ -17,6 +17,10 @@
             "flight_id": 1,
             "colour": "Green",
             "sock_colours": "Green,Blue",
+            "shoe_colours": [
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "alpha@example.com",
                 "alpha@beta.com"
@@ -37,6 +41,7 @@
             "flight_id": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": []
         },
         {
@@ -54,6 +59,11 @@
             "flight_id": 1,
             "colour": "Blue",
             "sock_colours": "Red,Green,Blue",
+            "shoe_colours": [
+                "Red",
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "gamma@example.com"
             ]
@@ -73,6 +83,7 @@
             "flight_id": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": []
         },
         {
@@ -90,6 +101,7 @@
             "flight_id": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": []
         }
     ]

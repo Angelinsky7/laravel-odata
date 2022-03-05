@@ -470,6 +470,11 @@
             "$Type": "com.example.odata.MultiColours",
             "$Nullable": true
         },
+        "shoe_colours": {
+            "$Collection": true,
+            "$Type": "com.example.odata.Colours",
+            "$Nullable": false
+        },
         "emails": {
             "$Collection": true,
             "$Type": "Edm.String",

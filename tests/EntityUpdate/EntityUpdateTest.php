@@ -297,6 +297,18 @@ abstract class EntityUpdateTest extends TestCase
         );
     }
 
+    public function test_update_enum_collection()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->path($this->entityPath)
+                ->patch()
+                ->body([
+                    'shoe_colours' => ['Brown', 'Blue'],
+                ])
+        );
+    }
+
     public function test_collection_property_put()
     {
         $this->assertJsonResponseSnapshot(

@@ -77,7 +77,6 @@
         <ActionImport Name="exec" Action="com.example.odata.exec"/>
         <ActionImport Name="exec2" Action="com.example.odata.exec2"/>
         <EntitySet Name="Passengers" EntityType="com.example.odata.Passenger">
-          <NavigationPropertyBinding Path="pets" Target="Pets"/>
           <Annotation Term="Org.OData.Capabilities.V1.CountRestrictions">
             <Record>
               <PropertyValue Property="Countable" Bool="true"/>
@@ -140,7 +139,6 @@
           </Annotation>
         </EntitySet>
         <EntitySet Name="Pets" EntityType="com.example.odata.Pet">
-          <NavigationPropertyBinding Path="passenger" Target="Passengers"/>
           <Annotation Term="Org.OData.Capabilities.V1.CountRestrictions">
             <Record>
               <PropertyValue Property="Countable" Bool="true"/>
@@ -204,18 +202,6 @@
         </EntitySet>
         <FunctionImport Name="insarg" Function="com.example.odata.insarg"/>
       </EntityContainer>
-      <EnumType Name="Colours" UnderlyingType="Edm.Int64" IsFlags="false">
-        <Member Name="Red" Value="1"/>
-        <Member Name="Green" Value="2"/>
-        <Member Name="Blue" Value="4"/>
-        <Member Name="Brown" Value="8"/>
-      </EnumType>
-      <EnumType Name="MultiColours" UnderlyingType="Edm.Int64" IsFlags="true">
-        <Member Name="Red" Value="1"/>
-        <Member Name="Green" Value="2"/>
-        <Member Name="Blue" Value="4"/>
-        <Member Name="Brown" Value="8"/>
-      </EnumType>
       <EntityType Name="Flight">
         <Key>
           <PropertyRef Name="id"/>
@@ -243,12 +229,10 @@
         <Property Name="dq" Type="Edm.Date" Nullable="true"/>
         <Property Name="in_role" Type="Edm.Decimal" Nullable="true"/>
         <Property Name="open_time" Type="Edm.TimeOfDay" Nullable="true"/>
-        <Property Name="colour" Type="com.example.odata.Colours" Nullable="true"/>
-        <Property Name="sock_colours" Type="com.example.odata.MultiColours" Nullable="true"/>
+        <Property Name="colour" Type="Edm.Int64" Nullable="true"/>
+        <Property Name="sock_colours" Type="Edm.Int64" Nullable="true"/>
+        <Property Name="shoe_colours" Type="Collection(Edm.String)" Nullable="false"/>
         <Property Name="emails" Type="Collection(Edm.String)" Nullable="false"/>
-        <NavigationProperty Name="pets" Type="Collection(com.example.odata.Pet)" Nullable="true">
-          <ReferentialConstraint Property="id" ReferencedProperty="passenger_id"/>
-        </NavigationProperty>
       </EntityType>
       <EntityType Name="Pet">
         <Key>
@@ -260,7 +244,6 @@
         <Property Name="passenger_id" Type="Edm.Int64" Nullable="true"/>
         <Property Name="name" Type="Edm.String" Nullable="true"/>
         <Property Name="type" Type="Edm.String" Nullable="true"/>
-        <NavigationProperty Name="passenger" Type="com.example.odata.Passenger" Nullable="true"/>
       </EntityType>
       <Function Name="hello" IsBound="false">
         <ReturnType Type="Edm.String" Nullable="false"/>

@@ -43,7 +43,8 @@ abstract class ExpressionTest extends TestCase
         $type = (new EntityType('flight'))
             ->setKey(new DeclaredProperty('id', Type::int32()))
             ->addDeclaredProperty('origin', Type::string())
-            ->addDeclaredProperty('priority', $priority);
+            ->addDeclaredProperty('priority', $priority)
+            ->addDeclaredProperty('priorityC', Type::collection($priority));
 
         (new LoopbackEntitySet($this, $type))->assertFilterExpression($expression);
         (new MySQLEntitySet($this, $type))->assertFilterExpression($expression);

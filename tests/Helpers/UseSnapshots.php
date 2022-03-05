@@ -61,7 +61,7 @@ trait UseSnapshots
     {
         $response = $this->req($request);
         $content = $this->getResponseContent($response);
-        $this->assertEquals($statusCode, $response->getStatusCode());
+        $this->assertEquals($statusCode, $response->getStatusCode(), $content);
         $this->assertMatchesSnapshot($content, new StreamingJsonDriver());
         return $response;
     }

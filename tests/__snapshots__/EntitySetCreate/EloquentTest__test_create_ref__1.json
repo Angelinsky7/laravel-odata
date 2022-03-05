@@ -11,5 +11,6 @@
     "open_time": null,
     "colour": null,
     "sock_colours": null,
+    "shoe_colours": [],
     "emails": []
 }

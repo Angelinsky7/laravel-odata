@@ -85,7 +85,34 @@ abstract class FilterTest extends TestCase
     {
         $this->assertJsonResponseSnapshot(
             (new Request)
-                ->filter("sock_colours has MultiColours'Blue,Green'")
+                ->filter("sock_colours has Colours'Blue,Green'")
+                ->path($this->entitySetPath)
+        );
+    }
+
+    public function test_filter_any()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->filter("originAirport/any(o:o/open_time gt 08:30:00)")
+                ->path($this->flightEntitySetPath)
+        );
+    }
+
+    public function test_filter_any_enum_collection()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->filter("shoe_colours/any(c:c eq Colours'Blue')")
+                ->path($this->entitySetPath)
+        );
+    }
+
+    public function test_filter_all_enum_collection()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->filter("shoe_colours has Colours'Green,Blue'")
                 ->path($this->entitySetPath)
         );
     }

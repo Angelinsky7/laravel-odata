@@ -78,9 +78,7 @@
         },
         "Passengers": {
             "$EntityType": "com.example.odata.Passenger",
-            "$NavigationPropertyBinding": {
-                "pets": "Pets"
-            },
+            "$NavigationPropertyBinding": {},
             "@Org.OData.Capabilities.V1.CountRestrictions": {
                 "Countable": true
             },
@@ -122,9 +120,7 @@
         },
         "Pets": {
             "$EntityType": "com.example.odata.Pet",
-            "$NavigationPropertyBinding": {
-                "passenger": "Passengers"
-            },
+            "$NavigationPropertyBinding": {},
             "@Org.OData.Capabilities.V1.CountRestrictions": {
                 "Countable": true
             },
@@ -275,25 +271,22 @@
             "$Nullable": true
         },
         "colour": {
-            "$Type": "com.example.odata.Colours",
+            "$Type": "Edm.Int64",
             "$Nullable": true
         },
         "sock_colours": {
-            "$Type": "com.example.odata.MultiColours",
+            "$Type": "Edm.Int64",
             "$Nullable": true
+        },
+        "shoe_colours": {
+            "$Collection": true,
+            "$Type": "Edm.String",
+            "$Nullable": false
         },
         "emails": {
             "$Collection": true,
             "$Type": "Edm.String",
             "$Nullable": false
-        },
-        "pets": {
-            "$Collection": true,
-            "$Type": "com.example.odata.Pet",
-            "$Nullable": true,
-            "$ReferentialConstraint": {
-                "id": "passenger_id"
-            }
         }
     },
     "Pet": {
@@ -317,31 +310,7 @@
         "type": {
             "$Type": "Edm.String",
             "$Nullable": true
-        },
-        "passenger": {
-            "$Collection": false,
-            "$Type": "com.example.odata.Passenger",
-            "$Nullable": true,
-            "$ReferentialConstraint": {}
         }
-    },
-    "Colours": {
-        "$Kind": "EnumType",
-        "$IsFlags": false,
-        "Red": 1,
-        "Green": 2,
-        "Blue": 4,
-        "Brown": 8,
-        "$UnderlyingType": "Edm.Int64"
-    },
-    "MultiColours": {
-        "$Kind": "EnumType",
-        "$IsFlags": true,
-        "Red": 1,
-        "Green": 2,
-        "Blue": 4,
-        "Brown": 8,
-        "$UnderlyingType": "Edm.Int64"
     },
     "hello": {
         "$Kind": "Function",

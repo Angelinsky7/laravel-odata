@@ -1,0 +1,13 @@
+@@ @@
+         "colour": null,
+         "sock_colours": null,
+         "shoe_colours": null
++    },
++    {
++        "name": "Oobleck",
++        "shoe_colours": [
++            2,
++            1
++        ]
+     }
+ ]

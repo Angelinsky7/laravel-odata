@@ -18,6 +18,7 @@ class Passenger extends Model
         'dob' => 'datetime:Y-m-d H:i:s',
         'colour' => 'integer',
         'sock_colours' => 'integer',
+        'shoe_colours' => 'array',
         'emails' => 'array',
     ];
 

@@ -13,6 +13,11 @@
             "open_time": "07:07:07.000000",
             "colour": "Blue",
             "sock_colours": "Red,Green,Blue",
+            "shoe_colours": [
+                "Red",
+                "Green",
+                "Blue"
+            ],
             "emails": [
                 "gamma@example.com"
             ]
@@ -29,6 +34,7 @@
             "open_time": null,
             "colour": null,
             "sock_colours": null,
+            "shoe_colours": [],
             "emails": []
         }
     ],

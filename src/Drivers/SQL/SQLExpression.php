@@ -264,6 +264,45 @@ class SQLExpression
         }
 
         $this->pushStatement('(');
+
+        if ($node instanceof Has) {
+            if ($node->comparesCollection()) {
+                if (!$right instanceof Literal\Enum) {
+                    $node->notImplemented();
+                }
+
+                switch ($driver) {
+                    case SQLEntitySet::MySQL:
+                        $this->pushStatement('JSON_CONTAINS(');
+                        $this->evaluate($left);
+                        $this->pushComma();
+                        $this->pushStatement("'[");
+                        $this->pushStatement(join(', ', $right->getValue()->toValues()));
+                        $this->pushStatement("]' ) )");
+                        return;
+
+                    case SQLEntitySet::PostgreSQL:
+                        $this->evaluate($left);
+                        $this->pushStatement("@> '[");
+                        $this->pushStatement(join(', ', $right->getValue()->toValues()));
+                        $this->pushStatement("]'::jsonb )");
+                        return;
+
+                    default:
+                        $node->notImplemented();
+                }
+            }
+
+            $this->evaluate($left);
+            $this->pushStatement('&');
+            $this->evaluate($right);
+            $this->pushStatement('=');
+            $this->evaluate($right);
+
+            $this->pushStatement(')');
+            return;
+        }
+
         $this->evaluate($left);
 
         if (
@@ -367,14 +406,6 @@ class SQLExpression
 
                 $this->pushStatement('!=');
                 break;
-
-            case $node instanceof Has:
-                $this->pushStatement('&');
-                $this->evaluate($right);
-                $this->pushStatement('=');
-                $this->evaluate($right);
-                $this->pushStatement(')');
-                return;
 
             default:
                 $node->notImplemented();
@@ -839,13 +870,6 @@ class SQLExpression
         /** @var \Flat3\Lodata\Property $property */
         $property = $node->getValue();
 
-        if ($node instanceof Property\Lambda) {
-            $type = $this->entitySet->getType();
-
-            /** @var DeclaredProperty $property */
-            $property = $type->getProperty($node->getValue());
-        }
-
         if (!$property || !$property->isFilterable()) {
             throw new BadRequestException(
                 sprintf('The provided property (%s) is not filterable', $property->getName())
@@ -887,6 +911,8 @@ class SQLExpression
             return;
         }
 
+        $driver = $this->entitySet->getDriver();
+
         switch (true) {
             case $node instanceof Boolean:
                 $this->pushStatement('?');
@@ -916,7 +942,7 @@ class SQLExpression
             case $node instanceof Double:
                 $value = $node->getValue();
 
-                switch ($this->entitySet->getDriver()) {
+                switch ($driver) {
                     case SQLEntitySet::SQLite:
                         $this->pushStatement('CAST( ? AS NUMERIC )');
                         break;

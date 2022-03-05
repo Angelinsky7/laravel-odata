@@ -112,6 +112,10 @@ class FilesystemTest extends EntitySetCreateTest
     {
     }
 
+    public function test_enum_collection_property()
+    {
+    }
+
     public function test_collection_property()
     {
     }
