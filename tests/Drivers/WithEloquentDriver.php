@@ -55,7 +55,7 @@ trait WithEloquentDriver
         Lodata::discover(Pet::class);
         $pets = Lodata::getEntitySet('Pets');
 
-        if (!Discovery::supportsEnum()) {
+        if (!Lodata::getTypeDefinition('colour')) {
             $this->addEnumerationTypes();
             $passengerType->addDeclaredProperty('colour', Lodata::getTypeDefinition('Colours'));
             $passengerType->addDeclaredProperty('sock_colours', Lodata::getTypeDefinition('MultiColours'));
