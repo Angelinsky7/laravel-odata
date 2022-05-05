@@ -1328,6 +1328,15 @@ class Transaction
     }
 
     /**
+     * Check if the attached entities are compatible with the set.
+     * @param EntitySet $entitySet
+     * @return bool
+     */
+    public function isAttachedEntitySetsAreCompatible(EntitySet $entitySet): bool {
+        return array_key_exists($entitySet->getName(), $this->attachedEntitySets);
+    }
+
+    /**
      * Start transactions on attached entity sets
      */
     public function startTransaction()

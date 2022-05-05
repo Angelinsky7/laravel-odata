@@ -199,6 +199,16 @@ class PropertyValue implements ContextInterface, PipeInterface, JsonInterface, R
             return true;
         }
 
+        if($this->parent != null && $this->parent instanceof Entity && !$transaction->isAttachedEntitySetsAreCompatible($this->parent->getEntitySet())) {
+            $expand = $transaction->getExpand();
+            $innerTransaction = $expand->getNavigationTransaction();
+            if($innerTransaction != null){
+                $innerTransaction->attachEntitySet($this->parent->getEntitySet());
+                return $this->shouldEmit($innerTransaction);
+            }
+            return true;
+        }
+
         $select = $transaction->getSelect();
         $selected = $select->getCommaSeparatedValues();
 
