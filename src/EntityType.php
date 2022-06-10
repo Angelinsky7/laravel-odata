@@ -22,6 +22,12 @@ class EntityType extends ComplexType implements PipeInterface
     const identifier = 'Edm.EntityType';
 
     /**
+     * The Entity set related to this entity type
+     * @var EntitySet $entitySet
+     */
+    protected EntitySet $entitySet;
+
+    /**
      * Primary key property
      * @var DeclaredProperty $key
      */
@@ -113,4 +119,23 @@ class EntityType extends ComplexType implements PipeInterface
     {
         return Str::studly(class_basename($class));
     }
+
+    /**
+     * Get the related EntitySet to this EntityType
+     * @return EntitySet
+     */
+    public function getEntitySet(): EntitySet
+    {
+        return $this->entitySet;
+    }
+
+    /**
+     * Set the related EntitySet to this EntityType
+     * @return EntitySet
+     */
+    public function setEntitySet(EntitySet $value)
+    {
+        $this->entitySet = $value;
+    }
+
 }

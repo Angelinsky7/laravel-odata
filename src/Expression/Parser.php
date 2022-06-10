@@ -14,6 +14,7 @@ use Flat3\Lodata\Expression\Node\Literal;
 use Flat3\Lodata\Expression\Node\Operator\Comparison\Not_;
 use Flat3\Lodata\Expression\Node\Operator\Lambda;
 use Flat3\Lodata\Expression\Node\Operator\Logical;
+use Flat3\Lodata\Expression\Node\Operator\Navigation as OperatorNavigation;
 use Flat3\Lodata\Expression\Node\Property;
 use Flat3\Lodata\Facades\Lodata;
 use Flat3\Lodata\Helper\Constants;
@@ -56,6 +57,12 @@ abstract class Parser
      * @var Node[] $operandStack
      */
     protected $operandStack = [];
+
+    /**
+     * The entitySet stack
+     * @var EntitySet[] $entityStack
+     */
+    private $entityStack = [];
 
     /**
      * The lexer instance
@@ -272,6 +279,8 @@ abstract class Parser
             }
         }
 
+        $this->cleanContextEntitySet();
+
         return true;
     }
 
@@ -348,6 +357,8 @@ abstract class Parser
          * Then, push the current operator on the operator stack.
          */
         $this->operatorStack[] = $o1;
+
+        $this->cleanContextEntitySet();
 
         return true;
     }
@@ -649,9 +660,17 @@ abstract class Parser
 
         $operand = new Node\Property\Navigation($this);
         $operand->setValue($property);
+
+        $navigationOperator = new OperatorNavigation($this);
+        $navigationOperator->setValue('/');
+
         $this->operandStack[] = $operand;
         $this->tokens[] = $operand;
+        $this->operatorStack[] = $navigationOperator;
 
+        $nextEntitySet = $operand->getValue()->getType()->getEntitySet();
+        $this->pushContextEntitySet($nextEntitySet);
+        
         return true;
     }
 
@@ -737,12 +756,38 @@ abstract class Parser
     }
 
     /**
+     * Push an entity set onto the stack of contextual entites
+     * @param  EntitySet  $entitySet  Entity set
+     * @return $this Parser
+     */
+    public function pushContextEntitySet(EntitySet $entitySet): self
+    {
+        $this->entityStack[] = $entitySet;
+        $this->pushEntitySet($entitySet);
+
+        return $this;
+    }
+
+    /**
      * Pop an entity set off the stack
      * @return EntitySet Entity set
      */
     public function popEntitySet(): EntitySet
     {
         return array_pop($this->entitySets);
+    }
+
+    /**
+     * Pop an entity set off the stack
+     * @return void
+     */
+    public function cleanContextEntitySet(): void
+    {
+        foreach ($this->entityStack as $entitySet) {
+            $indexOfEntitySet = array_search($entitySet, $this->entitySets);
+            unset($this->entitySets[$indexOfEntitySet]);
+        }
+        $this->entityStack = [];
     }
 
     /**

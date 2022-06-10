@@ -624,6 +624,7 @@ abstract class EntitySet implements EntityTypeInterface, ReferenceInterface, Ide
     public function setType(EntityType $type): self
     {
         $this->type = $type;
+        $type->setEntitySet($this);
 
         if (!Lodata::getEntityType($type->getIdentifier())) {
             Lodata::add($type);
