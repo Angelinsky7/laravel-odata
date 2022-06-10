@@ -110,6 +110,26 @@ abstract class NavigationTest extends TestCase
         );
     }
 
+    public function test_expand_multiple_with_select()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->path($this->airportEntitySetPath.'/1')
+                ->expand('flights($select=duration),country($select=name)')
+                ->select('code')
+        );
+    }
+
+    public function test_expand_expand()
+    {
+        $this->assertJsonResponseSnapshot(
+            (new Request)
+                ->path($this->flightEntitySetPath.'/1')
+                ->select('id,duration')
+                ->expand('passengers($select=dob,age&$expand=pets($select=name))')
+        );
+    }
+
     public function test_expand_containing_filter()
     {
         $this->assertJsonResponseSnapshot(

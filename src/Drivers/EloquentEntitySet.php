@@ -320,7 +320,7 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
         $computedProperties = $compute->getProperties();
 
         foreach ($computedProperties as $computedProperty) {
-            $expression = new SQLExpression($this);
+            $expression = $this->getSQLExpression();
             $computeParser = $this->getComputeParser();
             $computeParser->pushEntitySet($this);
             $tree = $computeParser->generateTree($computedProperty->getExpression());
@@ -372,7 +372,7 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
     {
         $model = $this->getModel();
 
-        $expression = new SQLExpression($this);
+        $expression = $this->getSQLExpression();
 
         switch (true) {
             case $property instanceof DeclaredProperty:
@@ -380,7 +380,7 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
                 break;
 
             case $property instanceof ComputedProperty:
-                $computedExpression = new SQLExpression($this);
+                $computedExpression = $this->getSQLExpression();
                 $computeParser = $this->getComputeParser();
                 $computeParser->pushEntitySet($this);
                 $tree = $computeParser->generateTree($property->getExpression());
@@ -415,9 +415,21 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
             $nav = (new NavigationProperty($method, $right->getType()))
                 ->setCollection(true);
 
-            if ($r instanceof HasOne || $r instanceof HasOneOrMany) {
-                $localProperty = $this->getType()->getProperty($r->getLocalKeyName());
-                $foreignProperty = $right->getType()->getProperty($r->getForeignKeyName());
+            if ($r instanceof HasOneOrMany || $r instanceof BelongsTo) {
+                $localProperty = null;
+                $foreignProperty = null;
+
+                switch (true) {
+                    case $r instanceof HasOneOrMany:
+                        $localProperty = $this->getType()->getProperty($r->getLocalKeyName());
+                        $foreignProperty = $right->getType()->getProperty($r->getForeignKeyName());
+                        break;
+
+                    case $r instanceof BelongsTo:
+                        $localProperty = $this->getType()->getProperty($r->getForeignKeyName());
+                        $foreignProperty = $right->getType()->getProperty($r->getOwnerKeyName());
+                        break;
+                }
 
                 if (!$localProperty || !$foreignProperty) {
                     throw new ConfigurationException(
@@ -471,6 +483,13 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
     public function count(): int
     {
         $builder = $this->getBuilder();
+
+        if ($this->navigationSource) {
+            /** @var Entity $sourceEntity */
+            $sourceEntity = $this->navigationSource->getParent();
+            $expansionPropertyName = $this->navigationSource->getProperty()->getName();
+            $builder = $sourceEntity->getSource()->$expansionPropertyName();
+        }
 
         $where = $this->generateWhere();
 
