@@ -14,6 +14,7 @@ use Flat3\Lodata\Expression\Node\Literal;
 use Flat3\Lodata\Expression\Node\Operator\Comparison\Not_;
 use Flat3\Lodata\Expression\Node\Operator\Lambda;
 use Flat3\Lodata\Expression\Node\Operator\Logical;
+use Flat3\Lodata\Expression\Node\Operator\Navigation as OperatorNavigation;
 use Flat3\Lodata\Expression\Node\Property;
 use Flat3\Lodata\Facades\Lodata;
 use Flat3\Lodata\Helper\Constants;
@@ -133,6 +134,26 @@ abstract class Parser
 
             $operator->setVariable($lambdaVariable);
             $operator->setNavigationProperty($navigationProperty);
+
+            $this->operandStack[] = $operator;
+
+            return;
+        }
+
+        if ($operator instanceof OperatorNavigation) {
+            $property = array_pop($this->operandStack);
+            $navigationProperty = array_pop($this->operandStack);
+
+            if (!$navigationProperty instanceof Node\Property\Navigation) {
+                throw new ParserException('Navigation function was not prepended by a navigation property path');
+            }
+
+            if (!$property instanceof Property) {
+                throw new ParserException('Navigation function had no valid argument');
+            }
+
+            $operator->setNavigationProperty($navigationProperty);
+            $operator->setProperty($property);
 
             $this->operandStack[] = $operator;
 

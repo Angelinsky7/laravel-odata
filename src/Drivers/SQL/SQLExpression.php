@@ -59,6 +59,7 @@ use Flat3\Lodata\Expression\Node\Operator\Logical\In;
 use Flat3\Lodata\Expression\Node\Operator\Logical\LessThan;
 use Flat3\Lodata\Expression\Node\Operator\Logical\LessThanOrEqual;
 use Flat3\Lodata\Expression\Node\Operator\Logical\NotEqual;
+use Flat3\Lodata\Expression\Node\Operator\Navigation;
 use Flat3\Lodata\Expression\Node\Property;
 use Flat3\Lodata\Expression\Operator;
 use Flat3\Lodata\Helper\JSON;
@@ -111,6 +112,10 @@ class SQLExpression
                 $this->literalExpression($node);
                 break;
 
+            case $node instanceof Navigation:
+                $this->navigatorExpression($node);
+                break;
+
             case $node instanceof Operator:
                 $this->operatorExpression($node);
                 break;
@@ -142,7 +147,7 @@ class SQLExpression
      */
     public function pushStatement(string $statement): self
     {
-        $this->statement = $this->statement ? $this->statement.' '.$statement : $statement;
+        $this->statement = $this->statement ? $this->statement . ' ' . $statement : $statement;
 
         return $this;
     }
@@ -215,6 +220,27 @@ class SQLExpression
     }
 
     /**
+     * Expand an navigation expression
+     * @param Navigation $node Node
+     * @return void
+     */
+    protected function navigatorExpression(Navigation $node): void
+    {
+        $driver = $this->entitySet->getDriver();
+
+        $navigationProperty = $node->getNavigationProperty()->getValue();
+        $property = $node->getProperty()->getValue();
+
+        $type = $navigationProperty->getType();
+        $entitySet = $type->getEntitySet();
+        /** @var DeclaredProperty $property */
+        $property = $type->getProperty($property->getName());
+
+        $expression = $entitySet->propertyToExpression($property);
+        $this->pushExpression($expression);
+    }
+
+    /**
      * Expand an operator expression
      * @param  Operator  $node  Node
      * @return void
@@ -269,8 +295,7 @@ class SQLExpression
 
         if (
             !$node instanceof Comparison
-            && (
-                $left instanceof StartsWith
+            && ($left instanceof StartsWith
                 || $left instanceof EndsWith
                 || $left instanceof Contains
                 || $right instanceof StartsWith
@@ -822,7 +847,7 @@ class SQLExpression
                 }
 
                 if ($node instanceof EndsWith || $node instanceof Contains) {
-                    $value = '%'.$value;
+                    $value = '%' . $value;
                 }
 
                 $arg2->setValue($value);
@@ -955,7 +980,7 @@ class SQLExpression
             $node->notImplemented();
         }
 
-        list ($lambdaExpression) = $node->getArguments();
+        list($lambdaExpression) = $node->getArguments();
 
         /** @var NavigationProperty $navigationProperty */
         $navigationProperty = $node->getNavigationProperty()->getValue();
@@ -978,7 +1003,8 @@ class SQLExpression
             $this->pushParameters($field->getParameters());
 
             $this->pushStatement(
-                sprintf('( %s = %s ( SELECT %s from %s WHERE',
+                sprintf(
+                    '( %s = %s ( SELECT %s from %s WHERE',
                     $field->getStatement(),
                     $node instanceof Lambda\Any ? 'ANY' : 'ALL',
                     $targetSet->propertyToExpression($constraint->getReferencedProperty())->getStatement(),

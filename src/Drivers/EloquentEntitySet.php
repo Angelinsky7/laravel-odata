@@ -16,6 +16,7 @@ use Flat3\Lodata\ComputedProperty;
 use Flat3\Lodata\DeclaredProperty;
 use Flat3\Lodata\Drivers\SQL\SQLConnection;
 use Flat3\Lodata\Drivers\SQL\SQLExpression;
+use Flat3\Lodata\Drivers\SQL\SQLJoin;
 use Flat3\Lodata\Drivers\SQL\SQLOrderBy;
 use Flat3\Lodata\Drivers\SQL\SQLSchema;
 use Flat3\Lodata\Drivers\SQL\SQLWhere;
@@ -79,6 +80,7 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
         columnToDeclaredProperty as protected schemaColumnToDeclaredProperty;
     }
     use SQLWhere;
+    use SQLJoin;
 
     /**
      * Eloquent model class name
@@ -260,7 +262,7 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
     public function query(): Generator
     {
         $builder = $this->getBuilder();
-        $builder->select('*');
+        $builder->select("{$this->getModel()->getTable()}.*");
 
         if ($this->navigationSource) {
             /** @var Entity $sourceEntity */
@@ -274,6 +276,10 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
         }
 
         $this->selectComputedProperties($builder);
+
+        foreach ($this->generateJoins() as $join) {
+            $builder->leftJoin($join->getAlias(), $join->getRelationProperty(), '=', $join->getRelatedPoperty());
+        }
 
         $where = $this->generateWhere();
 
@@ -489,6 +495,10 @@ class EloquentEntitySet extends EntitySet implements CountInterface, CreateInter
             $sourceEntity = $this->navigationSource->getParent();
             $expansionPropertyName = $this->navigationSource->getProperty()->getName();
             $builder = $sourceEntity->getSource()->$expansionPropertyName();
+        }
+
+        foreach ($this->generateJoins() as $join) {
+            $builder->leftJoin($join->getAlias(), $join->getRelationProperty(), '=', $join->getRelatedPoperty());
         }
 
         $where = $this->generateWhere();
